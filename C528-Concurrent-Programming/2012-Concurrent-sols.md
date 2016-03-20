@@ -176,5 +176,9 @@ public synchronized void releaseWrite(){
 }
 ```
 
+c. 
+Prevents accidental sharing or escapement of locks: Synchronized methods can sometimes cause bad behavior. One example is creating implicit dependencies between different synchronized methods of the same object, as they share the same lock. A worse scenario is declaring synchronized methods in a base class (which might even be a 3rd party class) and then adding new synchronized methods to a derived class. This creates implicit synchronization dependencies across the hierarchy and has the potential of creating throughput issues or even deadlocks. To avoid these, it’s recommended to use a privately held object as a lock to prevent accidental sharing or escapement of locks.
+
+Increase security:  When using an intrinsic lock, an attacker can manipulate the system to trigger contention and deadlock by obtaining and indefinitely holding the intrinsic lock of an accessible class, consequently causing a denial of service (DoS). By using a privately held lock, lock contention between methods and those of a hostile class becomes impossible because the hostile class cannot access the private final lock object.
 
 
